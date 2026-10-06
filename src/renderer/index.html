@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <meta name="color-scheme" content="dark" />
+  <title>miru</title>
+  <link rel="stylesheet" href="shell.css" />
+</head>
+<body data-focus="off" data-route="home">
+  <header id="titlebar">
+    <a class="brand" aria-label="miru home">
+      <span class="brand-orbit" aria-hidden="true"><span></span></span>
+      <span class="brand-copy"><strong>miru</strong><small>PRIVATE CINEMA</small></span>
+    </a>
+
+    <div class="nav-controls" aria-label="Page navigation">
+      <button id="back" class="tool-button" title="Back" aria-label="Back" disabled><svg viewBox="0 0 24 24"><path d="m14.5 18-6-6 6-6"/></svg></button>
+      <button id="forward" class="tool-button" title="Forward" aria-label="Forward" disabled><svg viewBox="0 0 24 24"><path d="m9.5 18 6-6-6-6"/></svg></button>
+      <button id="reload" class="tool-button reload" title="Reload" aria-label="Reload"><svg viewBox="0 0 24 24"><path d="M19.8 8.2A8.3 8.3 0 1 0 20.3 14"/><path d="M20 3.5v5h-5"/></svg></button>
+    </div>
+
+    <div class="page-context" aria-live="polite">
+      <span class="context-index">01</span><span class="context-rule"></span>
+      <span class="context-text"><small id="page-kicker">CURRENT ROOM</small><strong id="page-title">For you</strong></span>
+    </div>
+
+    <form id="searchbar" autocomplete="off">
+      <span class="search-glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4 4"/></svg></span>
+      <label for="search">Find a signal</label>
+      <input id="search" type="text" placeholder="Creator, film, idea…" spellcheck="false" aria-label="Search YouTube" />
+      <kbd>⌘ K</kbd>
+    </form>
+
+    <div class="window-controls" aria-label="Window controls">
+      <button id="min" class="window-button" title="Minimise" aria-label="Minimise"><svg viewBox="0 0 12 12"><path d="M2.5 6h7"/></svg></button>
+      <button id="max" class="window-button" title="Maximise" aria-label="Maximise"><svg viewBox="0 0 12 12"><rect x="2.5" y="2.5" width="7" height="7" rx="1"/></svg></button>
+      <button id="close" class="window-button close" title="Close" aria-label="Close"><svg viewBox="0 0 12 12"><path d="m3 3 6 6m0-6-6 6"/></svg></button>
+    </div>
+  </header>
+
+  <nav id="rail" aria-label="miru navigation">
+    <div class="rail-art" aria-hidden="true"></div><div class="rail-noise" aria-hidden="true"></div>
+    <div class="rail-scroll"><ul class="nav" id="nav"></ul></div>
+
+    <div class="rail-dock">
+      <section class="focus-card" aria-label="Feed clarity">
+        <div class="focus-copy">
+          <span class="focus-symbol" aria-hidden="true"><i></i></span>
+          <span><small>ATMOSPHERE</small><strong>Quiet feed</strong></span>
+          <span class="focus-live" aria-hidden="true"></span>
+        </div>
+        <div class="segmented" id="focus-switch" role="group" aria-label="Feed filter">
+          <span class="segmented-light" aria-hidden="true"></span>
+          <button type="button" data-focus="off">Open</button><button type="button" data-focus="on">Quiet</button>
+        </div>
+        <div class="focus-stats" id="focus-stats" hidden></div>
+      </section>
+
+      <button id="sponsor-toggle" class="sponsor-toggle" type="button" role="switch" aria-checked="true" title="Skip mid-video sponsors and self-promotion">
+        <span class="signin-copy"><small>SPONSOR SKIP</small><strong id="sponsor-label">On</strong></span>
+        <span class="sponsor-track" aria-hidden="true"><i></i></span>
+      </button>
+
+      <button id="signin" class="signin-button" type="button" title="Sign in to YouTube through your own browser">
+        <span class="signin-glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.6"/><path d="M5 20c.6-3.7 3.4-5.6 7-5.6s6.4 1.9 7 5.6"/></svg></span>
+        <span class="signin-copy"><small>ACCOUNT</small><strong id="signin-label">Sign in</strong></span>
+        <span class="signin-spin" aria-hidden="true"></span>
+      </button>
+
+      <div class="system-line" aria-label="System status">
+        <span class="system-item"><i class="dot" id="ad-dot"></i><span id="ad-text">Shield on</span></span>
+        <span class="system-item"><i class="dot" id="llm-dot"></i><span id="llm-text">Local mind off</span></span>
+      </div>
+
+      <button id="collapse" class="collapse-button" title="Collapse sidebar">
+        <span class="collapse-icon"><svg viewBox="0 0 24 24"><path d="m14.5 18-6-6 6-6"/></svg></span>
+        <span class="collapse-copy">Close the panel</span><kbd>⌘ B</kbd>
+      </button>
+    </div>
+  </nav>
+
+  <div class="load-line" aria-hidden="true"></div>
+  <script src="shell.js"></script>
+</body>
+</html>

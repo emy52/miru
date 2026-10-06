@@ -1,0 +1,154 @@
+{
+  "version": 1,
+  "_comment": "Edit this file to tune Focus mode. 'words' match as whole words/phrases (case-insensitive). 'patterns' are raw regex. Copy to filters.json to override; filters.json is yours and never overwritten.",
+
+  "focus": {
+    "blockCategories": ["gaming", "comedy", "reaction", "drama", "clickbait"],
+    "threshold": 2,
+    "hideShortsAlways": true,
+    "dimInsteadOfHide": false,
+    "_channelMinVotes": "How many of a channel's videos the keywords must catch before the channel itself counts as evidence. Learned channels live in ~/.config/miru/channels.json — delete an entry there to unlearn it.",
+    "channelMinVotes": 2,
+
+    "_ytCategoryMap": "YouTube labels every video with its own category; miru looks it up once per channel and caches it. This maps YouTube's label onto a miru category. 'Entertainment' and 'People & Blogs' are deliberately unmapped — they're too broad to block on.",
+    "ytCategoryMap": {
+      "Gaming": "gaming",
+      "Comedy": "comedy"
+    }
+  },
+
+  "channels": {
+    "block": [],
+    "allow": []
+  },
+
+  "rescue": {
+    "_comment": "Strong signals that a video is worth keeping even if it trips a blocker. Subtracts from the block score.",
+    "weight": 3,
+    "words": [
+      "tutorial", "documentary", "lecture", "course", "explained", "deep dive",
+      "conference", "keynote", "seminar", "workshop", "paper", "research",
+      "linux", "kernel", "compiler", "algorithm", "data structure", "architecture",
+      "rust", "python", "typescript", "golang", "kubernetes", "docker", "postgres",
+      "neovim", "wayland", "arch linux", "self hosted", "homelab", "networking",
+      "mathematics", "calculus", "linear algebra", "physics", "chemistry", "biology",
+      "history of", "how it works", "how to build", "from scratch", "under the hood",
+      "case study", "postmortem", "retrospective", "interview with", "podcast",
+      "benchmark", "comparison", "walkthrough of the code"
+    ],
+    "_removed": "'guide', 'review' and 'talk' were rescue words until they were measured against a real feed: 'AHRI VS AURORA GUIDE' was being actively rescued. Game guides and game reviews are the single most common gaming title shape — do not put these back."
+  },
+
+  "categories": {
+    "gaming": {
+      "weight": 2,
+      "words": [
+        "gameplay", "playthrough", "walkthrough", "lets play", "let's play",
+        "speedrun", "speedrunning", "no commentary", "boss fight", "all bosses",
+        "100% completion", "any%", "ranked", "clutch", "montage", "highlights",
+        "loadout", "meta build", "tier list", "patch notes", "buff", "nerf",
+        "noob", "pro player", "aim", "kd", "killstreak", "respawn", "loot",
+        "dlc", "early access", "beta gameplay", "modpack", "seed", "speedbuild",
+        "minecraft", "fortnite", "roblox", "valorant", "gta", "gta 5", "gta 6",
+        "call of duty", "warzone", "apex legends", "league of legends",
+        "dota", "csgo", "cs2", "counter-strike", "overwatch", "elden ring",
+        "dark souls", "bloodborne", "sekiro", "zelda", "pokemon", "mario",
+        "genshin", "honkai", "wuthering waves", "gacha", "fifa", "madden",
+        "nba 2k", "the sims", "terraria", "stardew valley", "among us",
+        "fall guys", "rust game", "dayz", "tarkov", "factorio", "satisfactory",
+        "subnautica", "skyrim", "fallout", "cyberpunk 2077", "the witcher",
+        "baldurs gate", "baldur's gate", "bg3", "helldivers", "palworld",
+        "deadlock", "marvel rivals", "rocket league", "clash royale",
+        "clash of clans", "brawl stars", "pubg", "free fire", "mobile legends",
+        "hearthstone", "runescape", "osrs", "wow classic", "world of warcraft",
+        "final fantasy", "persona", "monster hunter", "animal crossing",
+        "smash bros", "tekken", "street fighter", "mortal kombat",
+
+        "adc", "botlane", "bot lane", "top lane", "mid lane", "jungler",
+        "gank", "ganking", "teamfight", "team fight", "split push", "laning",
+        "lane phase", "matchup", "counter pick", "pentakill", "penta",
+        "baron steal", "dragon soul", "elo", "soloq", "solo queue",
+        "flex queue", "challenger", "grandmaster", "smurf", "aram", "urf",
+        "runes", "rune page", "full ap", "full ad", "ap build", "ad build",
+        "crit build", "on-hit", "one shot build", "ult", "kda",
+        "pull or skip", "should i pull", "should you pull", "worth pulling",
+        "banner pull", "f2p", "whale", "gacha pulls", "summons"
+      ],
+      "patterns": [
+        "\\b(ep|episode|part)\\.?\\s*\\d+\\b.*\\b(survival|hardcore|world|save)\\b",
+        "\\bvs\\b.*\\b(boss|raid|dungeon)\\b",
+        "\\b\\d{2,3}\\s*iq\\b"
+      ],
+      "channelWords": [
+        "gaming", "games", "gamer", "plays", "playz", "clips", "esports",
+        "gg", "ttv", "twitch", "lol", "league", "moba", "rift"
+      ]
+    },
+
+    "comedy": {
+      "weight": 2,
+      "words": [
+        "funny", "funniest", "hilarious", "lol", "lmao", "meme", "memes",
+        "try not to laugh", "you laugh you lose", "fail", "fails",
+        "fail compilation", "cursed", "shitpost", "brainrot", "skibidi",
+        "sigma", "rizz", "gyatt", "ohio", "npc", "cringe", "prank",
+        "pranks", "comedy", "sketch", "parody", "bloopers", "outtakes",
+        "best moments", "funny moments", "compilation", "tiktok", "tik tok",
+        "reels", "shitposting", "goofy", "silly", "chaos", "unhinged",
+        "caught in 4k", "ratio", "bruh", "vine", "vines", "dank"
+      ],
+      "patterns": [
+        "\\b(top\\s*\\d+|best\\s*\\d+)\\b.*\\b(funny|fails|moments|memes)\\b",
+        "\\bpart\\s*\\d+\\b.*\\b(meme|funny|edit)\\b"
+      ],
+      "channelWords": ["memes", "meme", "funny", "comedy", "clips", "daily dose"]
+    },
+
+    "reaction": {
+      "weight": 2,
+      "words": [
+        "reacts to", "reacting to", "reaction", "reactions", "first time watching",
+        "first time hearing", "blind reaction", "watches", "listening to",
+        "reacts", "watch party", "live reaction", "we react"
+      ],
+      "channelWords": ["reacts", "reaction"]
+    },
+
+    "drama": {
+      "weight": 2,
+      "words": [
+        "exposed", "exposing", "drama", "beef", "apology", "apologizes",
+        "responds to", "response to", "calls out", "called out", "cancelled",
+        "canceled", "receipts", "allegations", "accused", "feud", "clapback",
+        "the situation", "controversy", "lawsuit against", "quits", "quitting",
+        "leaving youtube", "tea", "spills", "confronted", "diss track", "beefing"
+      ],
+      "channelWords": ["drama", "tea", "gossip"]
+    },
+
+    "clickbait": {
+      "weight": 1,
+      "words": [
+        "you won't believe", "you wont believe", "gone wrong", "gone sexual",
+        "24 hours", "i spent", "insane", "shocking", "the truth about",
+        "nobody talks about", "this changes everything", "will blow your mind",
+        "doctors hate", "they don't want you to know", "what happened next",
+        "i tried", "for 30 days", "last to leave", "survive", "challenge",
+        "worlds largest", "world's largest", "impossible", "actually crazy",
+        "no way", "must watch", "before it's too late", "everyone is wrong about"
+      ],
+      "patterns": [
+        "\\$\\s?\\d{2,}",
+        "\\b\\d+\\s*(hours?|days?)\\s+(in|of|straight|challenge)\\b",
+        "^[^a-z]{12,}$",
+        "[!?]{2,}"
+      ]
+    },
+
+    "shorts": {
+      "weight": 5,
+      "words": ["#shorts", "#short", "#ytshorts", "#reels"],
+      "patterns": ["#shorts?\\b"]
+    }
+  }
+}

@@ -1,0 +1,279 @@
+/* ================================================================
+   miru / Velvet Signal — live YouTube surface
+   Tier 1 tokens form the durable base. Tier 2 reshapes native surfaces.
+   The opening stage at the end is Tier 3, mirrored from live feed cards.
+   ================================================================ */
+html {
+  --miru-bg: #02030a; --miru-ink: #050712; --miru-panel: #080b17;
+  --miru-raised: #0c0f1e; --miru-hover: #12162a;
+  --miru-line: rgba(236,239,255,.085); --miru-line-purple: rgba(154,128,255,.25);
+  --miru-text: #f6f4fb; --miru-dim: #9692a4; --miru-faint: #575566;
+  --miru-blue: #3d67ff; --miru-violet: #8d6aff; --miru-purple: #5c35d2;
+  --miru-big: 1s cubic-bezier(.18,.76,.16,1);
+  --miru-small: .5s cubic-bezier(.2,.72,.16,1);
+}
+
+/* Durable YouTube token layer. */
+html, html[dark], ytd-app {
+  --yt-spec-base-background: var(--miru-bg) !important;
+  --yt-spec-raised-background: var(--miru-raised) !important;
+  --yt-spec-menu-background: rgba(11,13,26,.97) !important;
+  --yt-spec-general-background-a: var(--miru-bg) !important;
+  --yt-spec-general-background-b: var(--miru-ink) !important;
+  --yt-spec-general-background-c: var(--miru-panel) !important;
+  --yt-spec-additive-background: rgba(255,255,255,.05) !important;
+  --yt-spec-inverted-background: var(--miru-text) !important;
+  --yt-spec-text-primary: var(--miru-text) !important;
+  --yt-spec-text-secondary: var(--miru-dim) !important;
+  --yt-spec-text-disabled: var(--miru-faint) !important;
+  --yt-spec-icon-active-other: var(--miru-text) !important;
+  --yt-spec-icon-inactive: #888497 !important;
+  --yt-spec-call-to-action: #987cff !important;
+  --yt-spec-brand-background-solid: var(--miru-bg) !important;
+  --yt-spec-brand-background-primary: var(--miru-bg) !important;
+  --yt-spec-badge-chip-background: #121528 !important;
+  --yt-spec-touch-response: rgba(136,102,255,.14) !important;
+  --yt-spec-10-percent-layer: rgba(255,255,255,.06) !important;
+  --yt-spec-outline: var(--miru-line) !important;
+  --yt-spec-static-overlay-background-heavy: rgba(2,3,10,.92) !important;
+  --yt-spec-static-overlay-background-medium: rgba(2,3,10,.76) !important;
+  --yt-spec-static-overlay-background-light: rgba(2,3,10,.55) !important;
+  --ytd-masthead-height: 0px !important;
+  --ytd-guide-width: 0px !important;
+  --ytd-mini-guide-width: 0px !important;
+}
+html, body, ytd-app { color: var(--miru-text) !important; background: var(--miru-bg) !important; font-family: "Segoe UI Variable","SF Pro Display",Inter,Cantarell,system-ui,sans-serif !important; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; z-index: -1; inset: 0; pointer-events: none; background: radial-gradient(circle at 18% -18%,rgba(42,74,210,.11),transparent 32%),radial-gradient(circle at 88% 10%,rgba(99,56,200,.08),transparent 30%); }
+
+/* miru owns navigation and window chrome. */
+#masthead-container,ytd-masthead,#guide,tp-yt-app-drawer#guide,ytd-mini-guide-renderer,#guide-spacer,ytd-butter-bar-renderer,#country-code,ytd-consent-bump-v2-lightbox { display: none !important; }
+ytd-page-manager#page-manager,ytd-app #page-manager { margin-top: 0 !important; margin-left: 0 !important; }
+ytd-app, ytd-app #content.ytd-app, #content, #page-manager, ytd-page-manager { margin-top: 0 !important; padding-top: 0 !important; }
+ytd-browse[page-subtype="home"], ytd-browse[page-subtype="home"] #content,
+ytd-browse[page-subtype="home"] #page-manager { margin-top: 0 !important; padding-top: 0 !important; }
+
+/* Promo and commerce surfaces have no place in the private cinema. */
+ytd-ad-slot-renderer,ytd-in-feed-ad-layout-renderer,ytd-promoted-video-renderer,ytd-promoted-sparkles-web-renderer,ytd-display-ad-renderer,ytd-banner-promo-renderer,ytd-statement-banner-renderer,ytd-merch-shelf-renderer,ytd-brand-video-shelf-renderer,ytd-primetime-promo-renderer,#player-ads,.ytp-ad-module,.ytp-ad-overlay-container,.ytp-featured-product,ytd-engagement-panel-section-list-renderer[target-id*="shopping"],ytd-clarification-renderer { display: none !important; }
+
+/* Feed canvas and native filters. */
+ytd-browse[page-subtype="home"] { background: linear-gradient(180deg,rgba(5,8,21,.86),var(--miru-bg) 30%) !important; }
+ytd-rich-grid-renderer, ytd-browse #contents { --ytd-rich-grid-item-margin: 15px !important; --ytd-rich-grid-gutter-margin: 15px !important; --ytd-rich-grid-content-max-width: 2300px !important; margin-top: 0 !important; padding-top: 0 !important; background: transparent !important; }
+ytd-rich-grid-renderer #contents.ytd-rich-grid-renderer { padding-bottom: 70px !important; }
+/* The native category row is useful, but its sticky shell became an opaque
+   empty slab after the labels scrolled away. Make the entire row ordinary
+   document content: Mix / Music / Gaming remain usable, then leave naturally
+   with the rest of the page instead of pinning a background to the viewport. */
+ytd-browse[page-subtype="home"] ytd-rich-grid-renderer > #header,
+ytd-browse[page-subtype="home"] #header.ytd-rich-grid-renderer,
+#chips-wrapper,
+ytd-feed-filter-chip-bar-renderer,
+ytd-feed-filter-chip-bar-renderer #chips-wrapper {
+  display: block !important;
+  position: static !important;
+  top: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+#chips-wrapper,ytd-feed-filter-chip-bar-renderer { margin: 0 !important; padding-top: 0 !important; }
+#frosted-glass.with-chipbar { display: none !important; }
+yt-chip-cloud-renderer { position: static !important; top: auto !important; border: 0 !important; background: transparent !important; box-shadow: none !important; backdrop-filter: none !important; }
+yt-chip-cloud-chip-renderer { min-height: 33px !important; border: 1px solid var(--miru-line) !important; border-radius: 10px !important; background: rgba(255,255,255,.025) !important; color: #888596 !important; transition: color var(--miru-small),border-color var(--miru-small),background var(--miru-small),transform var(--miru-small) !important; }
+yt-chip-cloud-chip-renderer:hover { color: #e7e3ef !important; border-color: rgba(151,127,255,.25) !important; background: rgba(107,81,220,.08) !important; transform: translateY(-1px); }
+yt-chip-cloud-chip-renderer[chip-style*="STYLE_SELECTED"],yt-chip-cloud-chip-renderer[selected],yt-chip-cloud-chip-renderer[aria-selected="true"],yt-chip-cloud-chip-renderer.iron-selected,yt-chip-cloud-chip-renderer:has([aria-selected="true"]) { border-color: rgba(170,147,255,.38) !important; background: linear-gradient(135deg,#3b5aca,#6c46d8) !important; color: white !important; box-shadow: 0 10px 25px rgba(50,35,135,.26),inset 0 1px rgba(255,255,255,.16) !important; }
+yt-chip-cloud-chip-renderer[chip-style*="STYLE_SELECTED"] *,yt-chip-cloud-chip-renderer[selected] *,yt-chip-cloud-chip-renderer[aria-selected="true"] *,yt-chip-cloud-chip-renderer.iron-selected *,yt-chip-cloud-chip-renderer:has([aria-selected="true"]) * { color: white !important; }
+yt-chip-cloud-chip-renderer[chip-style*="STYLE_SELECTED"] #chip-container,yt-chip-cloud-chip-renderer[selected] #chip-container,yt-chip-cloud-chip-renderer[aria-selected="true"] #chip-container,yt-chip-cloud-chip-renderer.iron-selected #chip-container,yt-chip-cloud-chip-renderer:has([aria-selected="true"]) #chip-container,yt-chip-cloud-chip-renderer[chip-style*="STYLE_SELECTED"] .ytChipShapeChip,yt-chip-cloud-chip-renderer[selected] .ytChipShapeChip,yt-chip-cloud-chip-renderer[aria-selected="true"] .ytChipShapeChip,yt-chip-cloud-chip-renderer.iron-selected .ytChipShapeChip,yt-chip-cloud-chip-renderer:has([aria-selected="true"]) .ytChipShapeChip { background: linear-gradient(135deg,#3b5aca,#6c46d8) !important; }
+
+/* Native cards become film objects, not floating social tiles. */
+ytd-rich-item-renderer,ytd-video-renderer,ytd-compact-video-renderer,ytd-grid-video-renderer,yt-lockup-view-model { box-sizing: border-box; border: 1px solid transparent; border-radius: 17px; transition: background var(--miru-small),border-color var(--miru-small),transform var(--miru-small),box-shadow var(--miru-small),opacity var(--miru-small) !important; }
+ytd-rich-item-renderer:hover,ytd-video-renderer:hover,ytd-compact-video-renderer:hover,ytd-grid-video-renderer:hover,yt-lockup-view-model:hover { z-index: 3; border-color: rgba(144,118,255,.17); background: linear-gradient(145deg,rgba(51,42,109,.13),rgba(255,255,255,.018)); box-shadow: 0 28px 70px -45px #000,inset 0 1px rgba(255,255,255,.025); transform: translateY(-4px); }
+ytd-thumbnail,ytd-thumbnail img,yt-image img,ytd-playlist-thumbnail,.yt-thumbnail-view-model,.yt-thumbnail-view-model img,.ytCoreImageHost { overflow: hidden !important; border-radius: 13px !important; }
+ytd-thumbnail,.yt-thumbnail-view-model { position: relative !important; outline: 1px solid rgba(255,255,255,.075); outline-offset: -1px; background: var(--miru-panel) !important; box-shadow: 0 18px 45px -34px #000; transition: outline-color var(--miru-small),box-shadow var(--miru-small),filter var(--miru-small) !important; }
+ytd-thumbnail::after,.yt-thumbnail-view-model::after { content: "WATCH"; position: absolute; z-index: 20; right: 11px; bottom: 10px; padding: 6px 9px; border: 1px solid rgba(255,255,255,.15); border-radius: 7px; background: rgba(5,5,14,.72); color: white; font-size: 6px; font-weight: 800; letter-spacing: .15em; opacity: 0; pointer-events: none; backdrop-filter: blur(14px); transform: translateY(5px); transition: opacity var(--miru-small),transform var(--miru-small); }
+ytd-rich-item-renderer:hover ytd-thumbnail,ytd-video-renderer:hover ytd-thumbnail,ytd-compact-video-renderer:hover ytd-thumbnail,yt-lockup-view-model:hover .yt-thumbnail-view-model { outline-color: rgba(151,128,255,.3); box-shadow: 0 25px 55px -34px rgba(53,35,139,.8); }
+ytd-rich-item-renderer:hover ytd-thumbnail::after,ytd-video-renderer:hover ytd-thumbnail::after,ytd-compact-video-renderer:hover ytd-thumbnail::after,yt-lockup-view-model:hover .yt-thumbnail-view-model::after { opacity: 1; transform: translateY(0); }
+#video-title,.yt-lockup-metadata-view-model__title,h3.ytd-rich-grid-media { color: #efedf5 !important; font-weight: 570 !important; letter-spacing: -.018em !important; line-height: 1.4 !important; }
+ytd-channel-name,#metadata-line,.yt-content-metadata-view-model__metadata-text { color: var(--miru-dim) !important; }
+ytd-thumbnail-overlay-time-status-renderer,.badge-shape-wiz__text { border: 1px solid rgba(255,255,255,.1) !important; border-radius: 6px !important; background: rgba(3,4,11,.78) !important; backdrop-filter: blur(12px) !important; }
+ytd-shelf-renderer #title,ytd-rich-shelf-renderer #title,ytd-reel-shelf-renderer #title,#header .ytd-item-section-renderer h2 { color: #d9d5e1 !important; font: 400 24px/1.1 Georgia,"Times New Roman",serif !important; letter-spacing: -.025em !important; }
+
+/* Search and archives read as a calm index. */
+ytd-search ytd-video-renderer,ytd-browse[page-subtype="channels"] ytd-video-renderer,ytd-playlist-video-renderer { margin: 8px 0 !important; padding: 12px !important; border-color: var(--miru-line); background: rgba(255,255,255,.012); }
+ytd-search ytd-video-renderer:hover,ytd-playlist-video-renderer:hover { border-color: rgba(145,119,255,.23); background: linear-gradient(110deg,rgba(66,49,147,.14),rgba(255,255,255,.014)); transform: translateX(3px); }
+ytd-channel-renderer { padding: 20px !important; border-bottom: 1px solid var(--miru-line) !important; }
+
+/* Watch page: the player is the room, metadata recedes around it. */
+ytd-watch-flexy[flexy] #columns { padding-top: 22px !important; }
+ytd-watch-flexy #primary-inner { padding-bottom: 76px !important; }
+#player-container-outer,#player-container,.html5-video-player,#movie_player video,ytd-player { overflow: hidden !important; border-radius: 15px !important; }
+#player-container-outer,ytd-player { outline: 1px solid rgba(255,255,255,.11); outline-offset: -1px; box-shadow: 0 34px 100px -45px #000,0 0 80px rgba(61,44,150,.055) !important; }
+ytd-watch-metadata { margin-top: 15px !important; padding: 18px 19px 17px !important; border: 1px solid var(--miru-line) !important; border-radius: 16px !important; background: linear-gradient(145deg,rgba(36,33,76,.15),rgba(255,255,255,.014)) !important; box-shadow: inset 0 1px rgba(255,255,255,.025); }
+ytd-watch-metadata #title h1 { color: var(--miru-text) !important; font: 400 clamp(21px,1.8vw,29px)/1.15 Georgia,"Times New Roman",serif !important; letter-spacing: -.028em !important; }
+#description.ytd-watch-metadata { border: 1px solid rgba(255,255,255,.055) !important; border-radius: 12px !important; background: rgba(255,255,255,.028) !important; transition: background var(--miru-small),border-color var(--miru-small) !important; }
+#description.ytd-watch-metadata:hover { border-color: rgba(137,109,255,.17) !important; background: rgba(81,61,153,.07) !important; }
+#secondary ytd-compact-video-renderer { margin-bottom: 6px !important; padding: 7px !important; }
+#secondary ytd-compact-video-renderer:hover { transform: translateX(-3px); }
+ytd-comments-header-renderer { margin-top: 34px !important; }
+ytd-comments #contents ytd-comment-thread-renderer { margin: 5px 0; padding: 12px 13px; border: 1px solid transparent; border-radius: 13px; transition: background var(--miru-small),border-color var(--miru-small),transform var(--miru-small); }
+ytd-comments #contents ytd-comment-thread-renderer:hover { border-color: rgba(255,255,255,.055); background: rgba(255,255,255,.022); transform: translateX(3px); }
+
+/* Native controls, menus and progress adopt one material language. */
+yt-button-shape button,ytd-button-renderer button,.yt-spec-button-shape-next--tonal { border-radius: 10px !important; transition: background var(--miru-small),color var(--miru-small),transform var(--miru-small),box-shadow var(--miru-small) !important; }
+yt-button-shape button:hover,ytd-button-renderer button:hover { transform: translateY(-1px); }
+tp-yt-paper-dialog,ytd-menu-popup-renderer,ytd-multi-page-menu-renderer,yt-sheet-view-model,.ytContextualSheetLayoutHost { border: 1px solid var(--miru-line) !important; border-radius: 16px !important; background: rgba(10,12,25,.96) !important; box-shadow: 0 30px 100px rgba(0,0,0,.55),inset 0 1px rgba(255,255,255,.035) !important; backdrop-filter: blur(28px) !important; }
+tp-yt-paper-item:hover,ytd-menu-service-item-renderer:hover { background: rgba(117,87,255,.1) !important; }
+.ytp-play-progress,.ytp-scrubber-button,.ytp-swatch-background-color { background: linear-gradient(90deg,var(--miru-blue),var(--miru-violet)) !important; }
+.ytp-scrubber-button { box-shadow: 0 0 14px rgba(126,91,255,.8) !important; }
+.ytp-popup,.ytp-settings-menu { overflow: hidden !important; border-radius: 13px !important; backdrop-filter: blur(24px) !important; }
+
+/* Opening stage — built only from the first three real feed entries. */
+[data-miru-hero-src] { display: none !important; }
+.miru-hero { width: calc(100% - 38px); margin: 20px 19px 38px; box-sizing: border-box; animation: miru-arrive var(--miru-big) both; }
+.miru-stage-heading { min-height: 65px; padding: 0 3px 14px; display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; border-bottom: 1px solid var(--miru-line); }
+.miru-stage-heading-copy { display: grid; gap: 5px; }
+.miru-stage-heading-copy>span { color: #806af0; font-size: 7px; font-weight: 850; letter-spacing: .24em; }
+.miru-stage-heading h2 { margin: 0; color: #f1eef7; font: 400 clamp(24px,2.4vw,38px)/1 Georgia,"Times New Roman",serif; letter-spacing: -.035em; }
+.miru-stage-note { padding-bottom: 4px; color: #565464; font-size: 6px; font-weight: 750; letter-spacing: .18em; }
+.miru-stage-grid { height: clamp(420px,36vw,555px); margin-top: 13px; display: grid; grid-template-columns: minmax(0,1.68fr) minmax(220px,.72fr); gap: 12px; }
+.miru-feature-primary,.miru-feature-minor { position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.1); background: var(--miru-panel); cursor: pointer; isolation: isolate; transition: border-color var(--miru-small),box-shadow var(--miru-small),transform var(--miru-small); }
+.miru-feature-primary { border-radius: 18px; box-shadow: 0 38px 100px -52px #000,inset 0 1px rgba(255,255,255,.05); }
+.miru-feature-primary:hover { border-color: rgba(166,143,255,.35); box-shadow: 0 45px 110px -48px #000,0 0 70px rgba(69,44,169,.09); transform: translateY(-3px); }
+.miru-hero-art,.miru-minor-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 8s ease,filter var(--miru-big); }
+.miru-hero-art { transform: scale(1.025); }
+.miru-feature-primary:hover .miru-hero-art { filter: saturate(1.07) brightness(1.03); transform: scale(1.075); }
+.miru-hero-scrim { position: absolute; z-index: 1; inset: 0; background: linear-gradient(90deg,rgba(2,3,10,.97),rgba(3,4,12,.68) 42%,rgba(3,4,12,.04) 78%),linear-gradient(0deg,rgba(2,3,9,.88),transparent 58%); }
+.miru-hero-copy { position: absolute; z-index: 3; left: clamp(27px,3.8vw,62px); bottom: clamp(30px,3.8vw,58px); width: min(650px,68%); transition: transform var(--miru-big); }
+.miru-feature-primary:hover .miru-hero-copy { transform: translateY(-4px); }
+.miru-hero-eyebrow { margin-bottom: 14px; display: flex; align-items: center; gap: 9px; color: #a38eff; font-size: 7px; font-weight: 850; letter-spacing: .23em; }
+.miru-hero-eyebrow::before { content: ""; width: 19px; height: 1px; background: #9d86ff; box-shadow: 0 0 9px #7559ff; }
+.miru-hero-title { margin: 0 0 12px; display: -webkit-box; overflow: hidden; color: #faf8ff; font: 400 clamp(31px,3.8vw,59px)/.98 Georgia,"Times New Roman",serif; letter-spacing: -.05em; text-wrap: balance; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.miru-hero-meta { margin-bottom: 23px; color: #a9a4b5; font-size: 10px; letter-spacing: .025em; }
+.miru-hero-play { min-width: 118px; height: 40px; padding: 0 17px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid rgba(255,255,255,.18); border-radius: 10px; background: linear-gradient(135deg,#365bd3,#7448dd); color: white; font-size: 8px; font-weight: 750; letter-spacing: .06em; box-shadow: 0 16px 36px rgba(51,34,150,.34),inset 0 1px rgba(255,255,255,.2); transition: transform var(--miru-small),box-shadow var(--miru-small),filter var(--miru-small); }
+.miru-hero-play::before { content: ""; width: 0; height: 0; border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-left: 7px solid currentColor; }
+.miru-feature-primary:hover .miru-hero-play { filter: brightness(1.08); transform: translateY(-2px); box-shadow: 0 21px 45px rgba(62,39,174,.44),inset 0 1px rgba(255,255,255,.22); }
+.miru-feature-number { position: absolute; z-index: 3; top: 21px; right: 23px; color: rgba(255,255,255,.5); font: italic 18px/1 Georgia,"Times New Roman",serif; }
+.miru-feature-side { display: grid; grid-template-rows: 1fr 1fr; gap: 12px; min-width: 0; }
+.miru-feature-minor { border-radius: 15px; }
+.miru-feature-minor:hover { border-color: rgba(162,139,255,.31); box-shadow: 0 26px 60px -35px #000; transform: translateY(-3px); }
+.miru-minor-art { transform: scale(1.03); }
+.miru-feature-minor:hover .miru-minor-art { filter: saturate(1.05) brightness(1.04); transform: scale(1.09); }
+.miru-minor-scrim { position: absolute; z-index: 1; inset: 0; background: linear-gradient(0deg,rgba(2,3,10,.96),rgba(2,3,10,.15) 75%),linear-gradient(90deg,rgba(3,4,11,.44),transparent); }
+.miru-minor-copy { position: absolute; z-index: 2; left: 19px; right: 18px; bottom: 17px; display: grid; gap: 5px; }
+.miru-minor-index { color: #9b82ff; font: italic 12px/1 Georgia,"Times New Roman",serif; }
+.miru-minor-copy h3 { margin: 0; display: -webkit-box; overflow: hidden; color: #f3f0f8; font-size: 13px; font-weight: 590; line-height: 1.25; letter-spacing: -.018em; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.miru-minor-meta { overflow: hidden; color: #918d9c; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.miru-minor-arrow { position: absolute; z-index: 3; top: 15px; right: 15px; width: 27px; height: 27px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.13); border-radius: 50%; background: rgba(3,4,12,.52); color: white; font-size: 11px; opacity: .68; backdrop-filter: blur(12px); transition: opacity var(--miru-small),transform var(--miru-small),background var(--miru-small); }
+.miru-feature-minor:hover .miru-minor-arrow { opacity: 1; background: rgba(101,69,213,.75); transform: rotate(45deg); }
+.miru-stage-footer { min-height: 36px; padding: 12px 3px 0; display: flex; justify-content: space-between; color: #555263; font-size: 6px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+
+/* YouTube Music is a sibling app with a separate design-token vocabulary.
+   Its own masthead/guide would duplicate miru's controls, so Music becomes a
+   single listening room inside the same shell. */
+html:has(ytmusic-app), ytmusic-app {
+  --ytmusic-general-background: var(--miru-bg) !important;
+  --ytmusic-background: var(--miru-bg) !important;
+  --ytmusic-nav-bar-background: rgba(3,4,12,.96) !important;
+  --ytmusic-text-primary: var(--miru-text) !important;
+  --ytmusic-text-secondary: var(--miru-dim) !important;
+  --ytmusic-brand-color: #9a7dff !important;
+  color: var(--miru-text) !important;
+  background: var(--miru-bg) !important;
+}
+ytmusic-nav-bar, ytmusic-guide, ytmusic-guide-renderer, ytmusic-guide-entry-renderer,
+ytmusic-player-page #player-bar-background, ytmusic-browse #nav-bar {
+  display: none !important;
+}
+ytmusic-app-layout { padding-top: 0 !important; }
+ytmusic-app-layout, ytmusic-app #content, ytmusic-browse, ytmusic-browse-response,
+ytmusic-section-list-renderer { margin-left: 0 !important; padding-left: 0 !important; background: transparent !important; }
+ytmusic-carousel, ytmusic-playlist-shelf-renderer { background: transparent !important; }
+ytmusic-carousel h2, ytmusic-playlist-shelf-renderer h2,
+ytmusic-section-list-renderer .title { color: #f0edf7 !important; font: 400 28px/1.1 Georgia,"Times New Roman",serif !important; letter-spacing: -.035em !important; }
+ytmusic-two-row-item-renderer, ytmusic-responsive-list-item-renderer,
+ytmusic-player-queue-item { border-radius: 14px !important; transition: background var(--miru-small),transform var(--miru-small),box-shadow var(--miru-small) !important; }
+ytmusic-two-row-item-renderer:hover, ytmusic-responsive-list-item-renderer:hover { background: rgba(91,66,188,.12) !important; transform: translateY(-3px); box-shadow: 0 22px 50px -35px #000 !important; }
+ytmusic-two-row-item-renderer img, ytmusic-two-row-item-renderer .image,
+ytmusic-responsive-list-item-renderer img { border-radius: 13px !important; }
+ytmusic-two-row-item-renderer .title, ytmusic-responsive-list-item-renderer .title,
+ytmusic-two-row-item-renderer .flex-column { color: #ece9f3 !important; }
+ytmusic-two-row-item-renderer .subtitle, ytmusic-responsive-list-item-renderer .secondary-flex { color: var(--miru-dim) !important; }
+/* Music: no black slab behind the hidden nav bar, no reserved guide column. */
+ytmusic-app, ytmusic-app-layout {
+  --ytmusic-nav-bar-height: 0px !important;
+  --ytmusic-guide-width: 0px !important;
+  --ytmusic-mini-guide-width: 0px !important;
+  --ytmusic-nav-bar-offset: 0px !important;
+}
+ytmusic-app-layout > #nav-bar-background, #nav-bar-background, #nav-bar-divider,
+ytmusic-app-layout > #guide-wrapper, #mini-guide, tp-yt-app-drawer#guide, ytmusic-app-layout > [slot="nav-bar"] {
+  display: none !important; background: transparent !important; border: 0 !important; box-shadow: none !important;
+}
+ytmusic-app-layout > [slot="content"], ytmusic-app-layout #content, #layout.ytmusic-app-layout { margin-left: 0 !important; padding-left: 0 !important; margin-top: 0 !important; }
+
+/* Mood chips: ONE pill. The host box loses its border and fill; the inner link
+   is the shape, each tinted from a purple/cyan family. */
+ytmusic-chip-cloud-renderer, ytmusic-chip-cloud-chip-renderer, ytmusic-chip-cloud-chip-renderer .gradient-box {
+  background: transparent !important; border: 0 !important; box-shadow: none !important; outline: 0 !important;
+}
+ytmusic-chip-cloud-chip-renderer { --chip-h: 262; --chip-c: 188; }
+ytmusic-chip-cloud-chip-renderer:nth-child(3n+2) { --chip-h: 285; --chip-c: 172; }
+ytmusic-chip-cloud-chip-renderer:nth-child(3n)   { --chip-h: 240; --chip-c: 195; }
+ytmusic-chip-cloud-chip-renderer a.yt-simple-endpoint {
+  border: 1px solid hsla(var(--chip-h),80%,68%,.38) !important; border-radius: 999px !important;
+  background: linear-gradient(135deg,hsla(var(--chip-h),70%,22%,.95),hsla(var(--chip-h),65%,11%,.95)) !important;
+  color: hsl(var(--chip-c),95%,72%) !important; font-weight: 600 !important; letter-spacing: .01em;
+  box-shadow: 0 8px 22px -12px hsla(var(--chip-h),90%,55%,.7), inset 0 1px rgba(255,255,255,.08) !important;
+  transition: transform var(--miru-small), box-shadow var(--miru-small), filter var(--miru-small) !important;
+}
+ytmusic-chip-cloud-chip-renderer:hover a.yt-simple-endpoint { transform: translateY(-2px); filter: brightness(1.18); box-shadow: 0 12px 28px -10px hsla(var(--chip-c),95%,60%,.75), inset 0 1px rgba(255,255,255,.14) !important; }
+ytmusic-chip-cloud-chip-renderer[is-selected] a.yt-simple-endpoint, ytmusic-chip-cloud-chip-renderer[aria-selected="true"] a.yt-simple-endpoint {
+  background: linear-gradient(135deg,#3b5aca,#7a4ee8) !important; color: #fff !important; border-color: rgba(190,170,255,.6) !important;
+}
+
+/* Music: play buttons, transport and progress share the violet/blue accent. */
+ytmusic-app {
+  --paper-slider-active-color: #8d6aff !important; --paper-slider-knob-color: #a78bff !important;
+  --paper-slider-knob-start-color: #a78bff !important; --paper-slider-secondary-color: rgba(141,106,255,.35) !important;
+  --paper-slider-container-color: rgba(255,255,255,.14) !important; --paper-progress-active-color: #8d6aff !important;
+  --paper-slider-pin-color: #8d6aff !important;
+}
+ytmusic-play-button-renderer { border-radius: 50% !important; overflow: hidden !important; background: linear-gradient(135deg,#3d67ff,#7a4ee8) !important; box-shadow: 0 10px 28px -8px rgba(100,70,230,.85) !important; --ytmusic-play-button-icon-color: #fff !important; color: #fff !important; }
+ytmusic-play-button-renderer:hover { filter: brightness(1.15); }
+ytmusic-play-button-renderer yt-icon, ytmusic-play-button-renderer .icon { color: #fff !important; fill: #fff !important; }
+ytmusic-player-bar { background: linear-gradient(180deg,rgba(24,18,52,.96),rgba(10,8,26,.98)) !important; border-top: 1px solid var(--miru-line-purple) !important; }
+ytmusic-player-bar #play-pause-button { color: #fff !important; background: linear-gradient(135deg,#3d67ff,#7a4ee8) !important; border-radius: 50% !important; box-shadow: 0 8px 22px -8px rgba(100,70,230,.9) !important; --iron-icon-fill-color: #fff; }
+ytmusic-player-bar .left-controls-buttons yt-icon-button, ytmusic-player-bar .right-controls-buttons yt-icon-button, ytmusic-player-bar .middle-controls-buttons yt-icon-button { color: #b9a6ff !important; }
+ytmusic-player-bar yt-icon-button:hover { color: #fff !important; }
+#progress-bar.ytmusic-player-bar, #volume-slider { --paper-slider-active-color: #8d6aff; }
+#progress-bar #primaryProgress, #volume-slider #primaryProgress, #sliderBar #primaryProgress { background: linear-gradient(90deg,#3d67ff,#9a6bff) !important; }
+#progress-bar #sliderKnobInner, #volume-slider #sliderKnobInner { background: #a78bff !important; box-shadow: 0 0 12px rgba(150,110,255,.9) !important; }
+
+/* Empty ad shells left after network blocking. */
+ytd-rich-item-renderer:has(a[href*="googleadservices.com"]),ytd-rich-item-renderer:has(a[href*="/pagead/"]),ytd-rich-item-renderer:has(ytd-ad-slot-renderer),ytd-rich-item-renderer:has(ytd-in-feed-ad-layout-renderer),ytd-rich-item-renderer:has(ytd-display-ad-renderer),ytd-rich-section-renderer:has(ytd-ad-slot-renderer),ytd-item-section-renderer:has(>#contents>ytd-ad-slot-renderer) { display: none !important; }
+ytd-rich-item-renderer:not(:has(a[href*="/watch"],a[href*="/shorts/"],a[href*="/playlist"],a[href^="/@"],a[href*="/channel/"],a[href*="/post"])) { display: none !important; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { border: 3px solid var(--miru-bg); border-radius: 99px; background: #292838; }
+::-webkit-scrollbar-thumb:hover { background: #45415d; }
+::selection { color: white; background: #7558ed; }
+:focus-visible { outline: 1px solid #a28cff !important; outline-offset: 3px !important; }
+@keyframes miru-arrive { from { opacity: 0; transform: translateY(14px); filter: blur(5px); } to { opacity: 1; transform: none; filter: none; } }
+
+@media (max-width: 760px) {
+  .miru-hero { width: calc(100% - 24px); margin: 12px 12px 30px; }
+  .miru-stage-heading { min-height: 57px; }
+  .miru-stage-note { display: none; }
+  .miru-stage-grid { height: auto; grid-template-columns: 1fr; }
+  .miru-feature-primary { height: 365px; }
+  .miru-feature-side { height: 150px; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+  .miru-hero-copy { width: 78%; }
+  .miru-minor-copy h3 { font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .miru-feature-primary:hover .miru-hero-art,.miru-feature-minor:hover .miru-minor-art { transform: scale(1.03); }
+}

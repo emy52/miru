@@ -1,0 +1,27 @@
+{
+  "name": "miru",
+  "version": "1.0.0",
+  "description": "A YouTube client that looks good and stays out of your way.",
+  "type": "module",
+  "main": "src/main/index.js",
+  "scripts": {
+    "prestart": "node scripts/ensure-electron.mjs",
+    "start": "electron .",
+    "preselftest": "node scripts/ensure-electron.mjs",
+    "selftest": "electron . --selftest",
+    "preshot": "node scripts/ensure-electron.mjs",
+    "shot": "electron . --shot",
+    "package:linux": "electron-packager . miru --platform=linux --arch=x64 --out=dist --overwrite --ignore=^/dist",
+    "package:windows": "electron-packager . miru --platform=win32 --arch=x64 --out=dist --overwrite --ignore=^/dist"
+  },
+  "dependencies": {
+    "@ghostery/adblocker-electron": "^2.5.2"
+  },
+  "devDependencies": {
+    "electron": "^44.5.1",
+    "@electron/packager": "^18.3.6"
+  },
+  "allowScripts": {
+    "electron": true
+  }
+}
